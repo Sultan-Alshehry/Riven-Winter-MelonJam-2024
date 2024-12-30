@@ -60,6 +60,8 @@ class Player(BaseObject):
 
     def make_hit(self):
         self.hit = True
+        self.hit_count = 0
+        self.velocity = Vector2(0, 0)
 
     def move_left(self, vel):
         if self.direction != "left":
@@ -191,7 +193,6 @@ class Player(BaseObject):
                     elif obj.object_type == constants.ObjectType.PILLS:
                         self.transition = True
                         constants.game.level_manager.take_pills()
-                        constants.game.objects.remove(obj)
 
                 collided_object = obj
                 break
@@ -238,7 +239,7 @@ class Player(BaseObject):
                 self.velocity.y = self.CLIMBING_SPEED
             else:
                 self.velocity *= self.LADDER_DRAG
-                if abs(self.velocity.y) < 0.01:
+                if abs(self.velocity.y) < 0.1:
                     self.velocity.y = 0
             self.collide_horizontal(objects, -self.PLAYER_SPEED * 2)
             self.collide_horizontal(objects, self.PLAYER_SPEED * 2)
@@ -272,7 +273,9 @@ class Player(BaseObject):
     def death(self):
         if self.hit:
             self.hit = False
+            self.transition = True
+            self.velocity.y = 0
             self.on_animation_finish = None
             self.play_animation(self.idle_animation)
-            self.set_position(Vector2(0, 0))
+            self.set_position(Vector2(100, -500))
             constants.game.level_manager.restart_scene()

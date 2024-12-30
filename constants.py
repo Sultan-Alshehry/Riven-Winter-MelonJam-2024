@@ -2,8 +2,8 @@ import pygame
 from enum import Enum
 from Visual_Effects.animation import SpriteSheet
 
-WIDTH = 992
-HEIGHT = 542
+WIDTH = 1008
+HEIGHT = 520
 FPS = 90
 CENTER_WIDTH = WIDTH/2
 CENTER_HEIGHT = HEIGHT/2
@@ -45,6 +45,11 @@ deadly = [ObjectType.SPIKE, 115]
 
 half_top = [106]
 half_bottom = [115]
+
+switch = {
+    184: 183,
+    160: 183
+}
 
 # Used to store the instance of Game to be accessed by other modules
 game = None
